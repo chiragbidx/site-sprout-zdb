@@ -93,15 +93,41 @@ export default function Client({ redirectTo, flashStatus, flashMessage }: Client
     if (mode === "signup") {
       return {
         id: "signup",
-        title: "Create account",
-        description: "Start your free account in less than a minute.",
+        title: "Create your LeadFlow account",
+        description: "Start organizing leads and closing more deals.",
+        submitLabel: "Create Account",
+        helperText: (
+          <>
+            Already have an account?{" "}
+            <button
+              type="button"
+              onClick={() => setModeWithHash("signin")}
+              className="text-primary underline ml-1"
+            >
+              Sign in.
+            </button>
+          </>
+        ),
       };
     }
 
     return {
       id: "signin",
-      title: "Sign in",
-      description: "Use your email and password to continue.",
+      title: "Sign in to LeadFlow",
+      description: "Access your sales dashboard and manage your pipeline.",
+      submitLabel: "Sign In",
+      helperText: (
+        <>
+          Don't have an account?{" "}
+          <button
+            type="button"
+            onClick={() => setModeWithHash("signup")}
+            className="text-primary underline ml-1"
+          >
+            Sign up for free.
+          </button>
+        </>
+      ),
     };
   }, [mode]);
 
@@ -113,21 +139,20 @@ export default function Client({ redirectTo, flashStatus, flashMessage }: Client
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div className="space-y-4">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/80">
-                Panda Access
+                Welcome to LeadFlow
               </p>
               <h1 className="max-w-sm text-4xl font-semibold leading-tight tracking-tight">
-                Launch faster with one workspace for your team.
+                Organize, Track, and Close More Deals.
               </h1>
               <p className="max-w-md text-sm text-muted-foreground">
-                Secure auth, polished interface, and a clean onboarding flow built
-                for production teams.
+                Your all-in-one CRM for teams to keep leads, contacts, and pipeline moving forward.
               </p>
             </div>
 
             <div className="relative overflow-hidden rounded-2xl border border-secondary/70 bg-background/80 p-3 shadow-lg">
               <Image
-                src="/demo-img.jpg"
-                alt="Panda product preview"
+                src="/hero-image-light.jpeg"
+                alt="LeadFlow product preview"
                 className="h-full w-full rounded-xl object-cover"
                 width={1200}
                 height={900}
@@ -215,7 +240,7 @@ export default function Client({ redirectTo, flashStatus, flashMessage }: Client
                   </div>
 
                   <Button type="submit" className="w-full" disabled={isPending}>
-                    {isPending ? "Signing in..." : "Sign in"}
+                    {isPending ? "Signing in..." : content.submitLabel}
                   </Button>
                 </form>
               ) : (
@@ -268,7 +293,7 @@ export default function Client({ redirectTo, flashStatus, flashMessage }: Client
                   </div>
 
                   <Button type="submit" className="w-full" disabled={isPending}>
-                    {isPending ? "Creating account..." : "Create account"}
+                    {isPending ? "Creating account..." : content.submitLabel}
                   </Button>
                 </form>
               )}
@@ -284,6 +309,8 @@ export default function Client({ redirectTo, flashStatus, flashMessage }: Client
                   {activeState.message}
                 </p>
               ) : null}
+
+              <div className="text-center text-xs mt-2">{content.helperText}</div>
             </CardContent>
           </Card>
         </div>
