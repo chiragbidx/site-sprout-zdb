@@ -6,9 +6,10 @@ import { usePathname } from "next/navigation";
 import {
   ChevronDown,
   Home,
-  Hammer,
-  Settings,
-  Users,
+  User,
+  Briefcase,
+  Kanban,
+  // Settings, // Temporarily remove for basic branding as per requirements
 } from "lucide-react";
 import {
   Collapsible,
@@ -25,21 +26,12 @@ type NavItem = {
 
 const sections: { title: string; items: NavItem[] }[] = [
   {
-    title: "Platform",
+    title: "LeadFlow",
     items: [
-      { label: "Overview", href: "/dashboard", icon: Home },
-      {
-        label: "Feature",
-        href: "/dashboard/feature",
-        icon: Hammer,
-      },
-    ],
-  },
-  {
-    title: "Account",
-    items: [
-      { label: "Team", href: "/dashboard/team", icon: Users },
-      { label: "Settings", href: "/dashboard/settings", icon: Settings },
+      { label: "Overview", href: "/dashboard/overview", icon: Home },
+      { label: "Contacts", href: "/dashboard/contacts", icon: User },
+      { label: "Deals", href: "/dashboard/deals", icon: Briefcase },
+      { label: "Pipeline", href: "/dashboard/pipeline", icon: Kanban },
     ],
   },
 ];
@@ -93,9 +85,8 @@ function NavSection({
   defaultOpen: boolean;
 }) {
   function checkActive(href: string) {
-    if (href === "/dashboard") return pathname === "/dashboard";
-    if (href === "#") return false;
-    return pathname.startsWith(href);
+    if (href === "/dashboard/overview" && pathname === "/dashboard") return true;
+    return pathname === href;
   }
 
   return (
